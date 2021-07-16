@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tony_flutter_test/river_pod_step1.dart';
 
 import 'canvas_test_demo.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class Demo {
@@ -15,8 +17,12 @@ class Demo {
 }
 
 Demo canvasDemo = Demo('Canvas Demo', '/canvasTest', (context) => CanvasTestDemo());
+Demo riverPodDemo = Demo('RiverPod Step1', '/riverPodStep1', (context) => RiverPodStep2());
 
-var demos = [canvasDemo];
+var demos = [
+  canvasDemo,
+  riverPodDemo
+];
 
 Map<String, WidgetBuilder> _buildRouterBuilder() {
   return Map<String, WidgetBuilder>.fromIterable(
