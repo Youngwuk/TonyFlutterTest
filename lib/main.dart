@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tony_flutter_test/RiverPodStateNotifier/RiverpodDemo.dart';
 import 'package:tony_flutter_test/river_pod_step1.dart';
 
 import 'canvas_test_demo.dart';
@@ -17,7 +18,7 @@ class Demo {
 }
 
 Demo canvasDemo = Demo('Canvas Demo', '/canvasTest', (context) => CanvasTestDemo());
-Demo riverPodDemo = Demo('RiverPod Step1', '/riverPodStep1', (context) => RiverPodStep2());
+Demo riverPodDemo = Demo('RiverPod Step1', '/riverPodStep1', (context) => RiverpodDemo());
 
 var demos = [
   canvasDemo,

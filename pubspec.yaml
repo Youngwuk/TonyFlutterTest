@@ -22,6 +22,10 @@ environment:
 
 dependencies:
   flutter_riverpod: ^0.14.0+3
+  json_annotation:
+  dio:
+  freezed_annotation:
+
   flutter:
     sdk: flutter
 
@@ -31,6 +35,10 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  freezed:
+  build_runner:
+  json_serializable:
+
   flutter_test:
     sdk: flutter
 

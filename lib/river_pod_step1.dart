@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 var textStyle = TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold);
 
 final welcomeProvider = Provider((ref) => 'Welcome to Riverpod');
-final counterProvider = ChangeNotifierProvider((ref) => CounterNotifier());
+
 
 class RiverPodStep1 extends ConsumerWidget {
   const RiverPodStep1({Key? key}) : super(key: key);
@@ -27,6 +27,8 @@ class RiverPodStep1 extends ConsumerWidget {
     );
   }
 }
+
+final counterProvider = ChangeNotifierProvider((ref) => CounterNotifier());
 
 class RiverPodStep2 extends StatelessWidget {
   const RiverPodStep2({Key? key}) : super(key: key);
@@ -72,4 +74,49 @@ class CounterNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+}
+
+class FakeWeatherClient {
+  Future<int> get(String cityName) async {
+    await Future.delayed(Duration(seconds: 2));
+    return cityName == 'Texas' ? 18 : 21;
+  }
+}
+
+final fakeWeatherClientProvider = Provider((ref) => FakeWeatherClient());
+
+final responseProvider = FutureProvider<int>((ref) async {
+  final weatherClient = ref.read(fakeWeatherClientProvider);
+  return weatherClient.get('Texus');
+});
+
+final responseProvider2 = FutureProvider.autoDispose.family<int, String>((ref, cityName) async {
+  final weatherClient = ref.read(fakeWeatherClientProvider);
+  return weatherClient.get(cityName);
+});
+
+class RiverPodStep3 extends StatelessWidget {
+  const RiverPodStep3({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Consumer(
+              builder: (context, watch, child) {
+                final responseValue = watch(responseProvider);
+                return responseValue.map(
+                  data: (weather) => Text('${weather.value}', style: textStyle),
+                  loading: (_) => CircularProgressIndicator(),
+                  error: (message) => Text('${message.error}'),);
+              },
+            )
+          ],
+        )
+      ),
+    );
+  }
 }
