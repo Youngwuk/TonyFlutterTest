@@ -25,6 +25,7 @@ dependencies:
   json_annotation:
   dio:
   freezed_annotation:
+  get: ^4.2.4
 
   flutter:
     sdk: flutter
